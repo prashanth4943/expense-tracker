@@ -45,7 +45,8 @@ func (s *Store) migrate() error {
 		CREATE INDEX IF NOT EXISTS idx_expenses_category ON expenses(category);
 		CREATE INDEX IF NOT EXISTS idx_expenses_date     ON expenses(date DESC);
 		CREATE INDEX IF NOT EXISTS idx_expenses_idem     ON expenses(idempotency_key);
-	`)
+		CREATE UNIQUE INDEX idx_idempotency_key ON expenses(idempotency_key); 
+		`)
 	return err
 }
 

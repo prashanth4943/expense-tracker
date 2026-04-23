@@ -90,7 +90,14 @@ onMounted(() => {
   loadCategories()
 })
 
-watch(() => props.refreshTrigger, load)
+// watch(() => props.refreshTrigger, load)
+watch(() => props.refreshTrigger, () => {
+  load()
+})
+watch([filterCategory, sort], () => {
+  load()
+})
+
 
 async function load() {
   loading.value = true
@@ -100,8 +107,10 @@ async function load() {
       category: filterCategory.value,
       sort: sort.value,
     })
-    expenses.value = data.expenses
-    total.value = data.total
+
+    expenses.value = data.expenses || []
+    total.value = formatPaise(data.total || 0)
+
   } catch (e) {
     error.value = 'Failed to load expenses. Please try again.'
   } finally {
@@ -122,7 +131,8 @@ const categorySummary = computed(() => {
   const map = {}
   for (const e of expenses.value) {
     if (!map[e.category]) map[e.category] = 0
-    map[e.category] += e.amount_paise
+    // map[e.category] += e.amount_paise
+    map[e.category] += e.amount_paise || 0
   }
   return Object.entries(map).map(([category, paise]) => ({
     category,
