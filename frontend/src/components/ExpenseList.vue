@@ -71,7 +71,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { listExpenses, listCategories } from '../api.js'
+import { listExpenses, listCategories } from '../utils/api.js'
 
 const props = defineProps({
   refreshTrigger: Number,

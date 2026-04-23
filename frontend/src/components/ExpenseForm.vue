@@ -49,8 +49,8 @@
 
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
-import { createExpense, listCategories } from '../api.js'
-import { generateIdempotencyKey } from '../idempotency.js'
+import { createExpense, listCategories } from '../utils/api.js'
+import { generateIdempotencyKey } from '../utils/idempotency.js'
 
 const emit = defineEmits(['added'])
 
