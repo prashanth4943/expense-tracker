@@ -131,3 +131,82 @@ function today() {
   return new Date().toISOString().slice(0, 10)
 }
 </script>
+
+<style>
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+label {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #444;
+}
+input,
+select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+.btn {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.btn--primary {
+  background: #4f46e5;
+  color: white;
+}
+
+.btn--primary:hover {
+  background: #4338ca;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.alert--success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+h2 {
+  margin-bottom: 12px;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+form {
+  margin-top: 8px;
+}
+
+input[v-model="form.newCategory"] {
+  border-color: #4f46e5;
+}
+
+</style>

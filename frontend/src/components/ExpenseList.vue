@@ -17,9 +17,15 @@
 
       <label>
         Sort
-        <select v-model="sort" @change="load">
+        <!-- <select v-model="sort" @change="load">
           <option value="date_desc">Newest first</option>
-        </select>
+        </select> -->
+        <select v-model="sort" @change="load">
+  <option value="date_desc">Newest first</option>
+  <option value="date_asc">Oldest first</option>
+  <option value="amount_desc">Amount (high → low)</option>
+  <option value="amount_asc">Amount (low → high)</option>
+</select>
       </label>
     </div>
 
@@ -159,3 +165,133 @@ function formatPaise(paise) {
   return `₹${rupees}.${String(cents).padStart(2, '0')}`
 }
 </script>
+
+<style>
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f6f7fb;
+  margin: 0;
+  padding: 20px;
+  color: #222;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 0 auto 20px;
+}
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.total-badge {
+  background: #eef2ff;
+  color: #4f46e5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.filters label {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+th {
+  font-size: 13px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.right {
+  text-align: right;
+}
+
+.amount {
+  font-weight: 600;
+  color: #111;
+}
+
+.chip {
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.state-msg {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.state-msg.empty {
+  color: #999;
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.alert--error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.summary {
+  margin-top: 20px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.summary-item {
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+</style>

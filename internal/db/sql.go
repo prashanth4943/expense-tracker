@@ -44,8 +44,7 @@ func (s *Store) migrate() error {
 		);
 		CREATE INDEX IF NOT EXISTS idx_expenses_category ON expenses(category);
 		CREATE INDEX IF NOT EXISTS idx_expenses_date     ON expenses(date DESC);
-		CREATE INDEX IF NOT EXISTS idx_expenses_idem     ON expenses(idempotency_key);
-		CREATE UNIQUE INDEX idx_idempotency_key ON expenses(idempotency_key); 
+		CREATE UNIQUE INDEX IF NOT EXISTS idx_idempotency_key ON expenses(idempotency_key); 
 		`)
 	return err
 }
@@ -93,8 +92,21 @@ func (s *Store) ListExpenses(f ListFilter) ([]models.Expense, error) {
 		args = append(args, f.Category)
 	}
 
-	// Default and only supported sort is date descending.
-	query += ` ORDER BY date DESC, created_at DESC`
+	// 🔥 Safe sort mapping
+	orderBy := "date DESC, created_at DESC" // default
+
+	switch f.Sort {
+	case "date_desc":
+		orderBy = "date DESC, created_at DESC"
+	case "date_asc":
+		orderBy = "date ASC, created_at ASC"
+	case "amount_desc":
+		orderBy = "amount_paise DESC"
+	case "amount_asc":
+		orderBy = "amount_paise ASC"
+	}
+
+	query += " ORDER BY " + orderBy
 
 	rows, err := s.db.Query(query, args...)
 	if err != nil {
