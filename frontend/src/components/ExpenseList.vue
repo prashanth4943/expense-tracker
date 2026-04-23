@@ -109,7 +109,14 @@ async function load() {
     })
 
     expenses.value = data.expenses || []
-    total.value = formatPaise(data.total || 0)
+    // total.value = formatPaise(data.total || 0)
+    if (typeof data.total_paise === 'number') {
+  total.value = formatPaise(data.total_paise)
+} else if (data.total) {
+  total.value = data.total
+} else {
+  total.value = '₹0.00'
+}
 
   } catch (e) {
     error.value = 'Failed to load expenses. Please try again.'
